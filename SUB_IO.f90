@@ -1,0 +1,1299 @@
+SUBROUTINE RDSET(STYR,ENYR,STDOY,ENDOY,TRES,clmTRES,WEST,EAST,NORTH,SOUTH,WERES,NSRES,IRR,CRP_NAME,CRP_FILE,CO2_HEAD,CO2_YEAR,CO2_FOOT,YLD_HEAD,LAI_HEAD,TMP_HEAD,TMP_YEAR,TMP_FOOT,TMP_VNM,TMP_WEST,TMP_EAST,TMP_NORTH,TMP_SOUTH,TMP_WERES,TMP_NSRES,TMP_NSDIR,TMP_FORM,TMP_BYTE,TMP_MUL,TMP_ADD,TMX_HEAD,TMX_YEAR,TMX_FOOT,TMX_VNM,TMX_WEST,TMX_EAST,TMX_NORTH,TMX_SOUTH,TMX_WERES,TMX_NSRES,TMX_NSDIR,TMX_FORM,TMX_BYTE,TMX_MUL,TMX_ADD,TMN_HEAD,TMN_YEAR,TMN_FOOT,TMN_VNM,TMN_WEST,TMN_EAST,TMN_NORTH,TMN_SOUTH,TMN_WERES,TMN_NSRES,TMN_NSDIR,TMN_FORM,TMN_BYTE,TMN_MUL,TMN_ADD,PRC_HEAD,PRC_YEAR,PRC_FOOT,PRC_VNM,PRC_WEST,PRC_EAST,PRC_NORTH,PRC_SOUTH,PRC_WERES,PRC_NSRES,PRC_NSDIR,PRC_FORM,PRC_BYTE,PRC_MUL,PRC_ADD,RSD_HEAD,RSD_YEAR,RSD_FOOT,RSD_VNM,RSD_WEST,RSD_EAST,RSD_NORTH,RSD_SOUTH,RSD_WERES,RSD_NSRES,RSD_NSDIR,RSD_FORM,RSD_BYTE,RSD_MUL,RSD_ADD,SHM_HEAD,SHM_YEAR,SHM_FOOT,SHM_VNM,SHM_WEST,SHM_EAST,SHM_NORTH,SHM_SOUTH,SHM_WERES,SHM_NSRES,SHM_NSDIR,SHM_FORM,SHM_BYTE,SHM_MUL,SHM_ADD,WND_HEAD,WND_YEAR,WND_FOOT,WND_VNM,WND_WEST,WND_EAST,WND_NORTH,WND_SOUTH,WND_WERES,WND_NSRES,WND_NSDIR,WND_FORM,WND_BYTE,WND_MUL,WND_ADD,WND_HGT,PRS_HEAD,PRS_YEAR,PRS_FOOT,PRS_VNM,PRS_WEST,PRS_EAST,PRS_NORTH,PRS_SOUTH,PRS_WERES,PRS_NSRES,PRS_NSDIR,PRS_FORM,PRS_BYTE,PRS_MUL,PRS_ADD,OZN_HEAD,OZN_YEAR,OZN_FOOT,OZN_VNM,OZN_WEST,OZN_EAST,OZN_NORTH,OZN_SOUTH,OZN_WERES,OZN_NSRES,OZN_NSDIR,OZN_FORM,OZN_BYTE,OZN_MUL,OZN_ADD,PLT1_HEAD,PLT1_YEAR,PLT1_FOOT,PLT1_VNM,PLT1_WEST,PLT1_EAST,PLT1_NORTH,PLT1_SOUTH,PLT1_WERES,PLT1_NSRES,PLT1_NSDIR,PLT1_FORM,PLT1_BYTE,PLT1_MUL,PLT1_ADD,GDHm1_HEAD,GDHm1_YEAR,GDHm1_FOOT,GDHm1_VNM,GDHm1_WEST,GDHm1_EAST,GDHm1_NORTH,GDHm1_SOUTH,GDHm1_WERES,GDHm1_NSRES,GDHm1_NSDIR,GDHm1_FORM,GDHm1_BYTE,GDHm1_MUL,GDHm1_ADD,LND_HEAD,LND_YEAR,LND_FOOT,LND_VNM,LND_WEST,LND_EAST,LND_NORTH,LND_SOUTH,LND_WERES,LND_NSRES,LND_NSDIR,LND_FORM,LND_BYTE,LND_MUL,LND_ADD,SOIL_HEAD,SOIL_YEAR,SOIL_FOOT,SOIL_VNM,SOIL_WEST,SOIL_EAST,SOIL_NORTH,SOIL_SOUTH,SOIL_WERES,SOIL_NSRES,SOIL_NSDIR,SOIL_FORM,SOIL_BYTE,SOIL_MUL,SOIL_ADD,NFERT_HEAD,NFERT_YEAR,NFERT_FOOT,NFERT_VNM,NFERT_WEST,NFERT_EAST,NFERT_NORTH,NFERT_SOUTH,NFERT_WERES,NFERT_NSRES,NFERT_NSDIR,NFERT_FORM,NFERT_BYTE,NFERT_MUL,NFERT_ADD,P1V_HEAD,P1V_YEAR,P1V_FOOT,P1V_VNM,P1V_WEST,P1V_EAST,P1V_NORTH,P1V_SOUTH,P1V_WERES,P1V_NSRES,P1V_NSDIR,P1V_FORM,P1V_BYTE,P1V_MUL,P1V_ADD)
+  
+  IMPLICIT NONE
+  
+!!!  [OUTPUT]
+
+
+  INTEGER STYR      ! Start year [Year]
+  INTEGER ENYR      ! End year   [Year]
+  INTEGER STDOY     ! Start DOY  [day]
+  INTEGER ENDOY     ! End   DOY  [day]
+
+  INTEGER TRES      ! Time resolution [Second]
+  INTEGER clmTRES   ! Time resolution of climate forcing [Second]
+
+  REAL*8 WEST
+  REAL*8 EAST
+  REAL*8 NORTH
+  REAL*8 SOUTH
+  REAL*8 WERES
+  REAL*8 NSRES
+  
+  INTEGER IRR
+
+  CHARACTER*200 CRP_FILE    ! File for vegetation parameter
+  CHARACTER*200 CRP_NAME
+
+  CHARACTER*200 CO2_HEAD
+  CHARACTER*200 CO2_FOOT
+  CHARACTER*5 CO2_YEAR    
+
+
+
+
+  CHARACTER*200 YLD_HEAD
+  CHARACTER*200 LAI_HEAD
+
+
+
+
+  CHARACTER*200 dayLAI_HEAD
+  CHARACTER*200 dayWSL1_HEAD
+  CHARACTER*200 dayWSL2_HEAD
+  CHARACTER*200 dayWSL3_HEAD
+  CHARACTER*200 dayWSH_HEAD
+  CHARACTER*200 dayWLF_HEAD
+  CHARACTER*200 dayWSO_HEAD
+  CHARACTER*200 dayCDI_HEAD
+  CHARACTER*200 dayHDI_HEAD
+  CHARACTER*200 dayWSTRS_HEAD
+  CHARACTER*200 dayDVS_HEAD
+
+
+  CHARACTER*200 TMP_HEAD
+  CHARACTER*5 TMP_YEAR
+  CHARACTER*200 TMP_FOOT
+  CHARACTER*200 TMP_VNM
+  REAL*8  TMP_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  TMP_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  TMP_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  TMP_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  TMP_WERES
+  REAL*8  TMP_NSRES
+  CHARACTER*2  TMP_NSDIR
+  CHARACTER*1 TMP_FORM
+  INTEGER  TMP_BYTE
+  REAL*8  TMP_MUL
+  REAL*8  TMP_ADD
+
+
+  CHARACTER*200 TMX_HEAD
+  CHARACTER*5 TMX_YEAR
+  CHARACTER*200 TMX_FOOT
+  CHARACTER*200 TMX_VNM
+  REAL*8  TMX_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  TMX_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  TMX_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  TMX_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  TMX_WERES
+  REAL*8  TMX_NSRES
+  CHARACTER*2  TMX_NSDIR
+  CHARACTER*1 TMX_FORM
+  INTEGER  TMX_BYTE
+  REAL*8  TMX_MUL
+  REAL*8  TMX_ADD
+
+
+  CHARACTER*200 TMN_HEAD
+  CHARACTER*5 TMN_YEAR
+  CHARACTER*200 TMN_FOOT
+  CHARACTER*200 TMN_VNM
+  REAL*8  TMN_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  TMN_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  TMN_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  TMN_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  TMN_WERES
+  REAL*8  TMN_NSRES
+  CHARACTER*2  TMN_NSDIR
+  CHARACTER*1 TMN_FORM
+  INTEGER  TMN_BYTE
+  REAL*8  TMN_MUL
+  REAL*8  TMN_ADD
+
+  CHARACTER*200 PRC_HEAD
+  CHARACTER*5 PRC_YEAR
+  CHARACTER*200 PRC_FOOT
+  CHARACTER*200 PRC_VNM
+  REAL*8  PRC_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  PRC_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  PRC_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  PRC_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  PRC_WERES
+  REAL*8  PRC_NSRES
+  CHARACTER*2  PRC_NSDIR
+  CHARACTER*1 PRC_FORM
+  INTEGER  PRC_BYTE
+  REAL*8  PRC_MUL
+  REAL*8  PRC_ADD
+
+  CHARACTER*200 RSD_HEAD
+  CHARACTER*5 RSD_YEAR
+  CHARACTER*200 RSD_FOOT
+  CHARACTER*200 RSD_VNM
+  REAL*8  RSD_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  RSD_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  RSD_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  RSD_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  RSD_WERES
+  REAL*8  RSD_NSRES
+  CHARACTER*2  RSD_NSDIR
+  CHARACTER*1 RSD_FORM
+  INTEGER  RSD_BYTE
+  REAL*8  RSD_MUL
+  REAL*8  RSD_ADD
+
+  CHARACTER*200 SHM_HEAD
+  CHARACTER*5 SHM_YEAR
+  CHARACTER*200 SHM_FOOT
+  CHARACTER*200 SHM_VNM
+  REAL*8  SHM_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  SHM_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  SHM_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  SHM_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  SHM_WERES
+  REAL*8  SHM_NSRES
+  CHARACTER*2  SHM_NSDIR
+  CHARACTER*1 SHM_FORM
+  INTEGER  SHM_BYTE
+  REAL*8  SHM_MUL
+  REAL*8  SHM_ADD
+
+  CHARACTER*200 WND_HEAD
+  CHARACTER*5 WND_YEAR
+  CHARACTER*200 WND_FOOT
+  CHARACTER*200 WND_VNM
+  REAL*8  WND_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  WND_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  WND_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  WND_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  WND_WERES
+  REAL*8  WND_NSRES
+  CHARACTER*2  WND_NSDIR
+  CHARACTER*1 WND_FORM
+  INTEGER  WND_BYTE
+  REAL*8  WND_MUL
+  REAL*8  WND_ADD
+  REAL*8 WND_HGT    ! Height of input data for wind
+
+  CHARACTER*200 PRS_HEAD
+  CHARACTER*5 PRS_YEAR
+  CHARACTER*200 PRS_FOOT
+  CHARACTER*200 PRS_VNM
+  REAL*8  PRS_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  PRS_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  PRS_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  PRS_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  PRS_WERES
+  REAL*8  PRS_NSRES
+  CHARACTER*2  PRS_NSDIR
+  CHARACTER*1 PRS_FORM
+  INTEGER  PRS_BYTE
+  REAL*8  PRS_MUL
+  REAL*8  PRS_ADD
+
+  CHARACTER*200 OZN_HEAD
+  CHARACTER*5 OZN_YEAR
+  CHARACTER*200 OZN_FOOT
+  CHARACTER*200 OZN_VNM
+  REAL*8  OZN_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  OZN_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  OZN_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  OZN_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  OZN_WERES
+  REAL*8  OZN_NSRES
+  CHARACTER*2  OZN_NSDIR
+  CHARACTER*1 OZN_FORM
+  INTEGER  OZN_BYTE
+  REAL*8  OZN_MUL
+  REAL*8  OZN_ADD
+
+
+
+  CHARACTER*200 PLT1_HEAD
+  CHARACTER*5 PLT1_YEAR
+  CHARACTER*200 PLT1_FOOT
+  CHARACTER*200 PLT1_VNM
+  REAL*8  PLT1_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  PLT1_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  PLT1_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  PLT1_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  PLT1_WERES
+  REAL*8  PLT1_NSRES
+  CHARACTER*2  PLT1_NSDIR
+  CHARACTER*1 PLT1_FORM
+  INTEGER  PLT1_BYTE
+  REAL*8  PLT1_MUL
+  REAL*8  PLT1_ADD
+
+  CHARACTER*200 GDHm1_HEAD
+  CHARACTER*5 GDHm1_YEAR
+  CHARACTER*200 GDHm1_FOOT
+  CHARACTER*200 GDHm1_VNM
+  REAL*8  GDHm1_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  GDHm1_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  GDHm1_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  GDHm1_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  GDHm1_WERES
+  REAL*8  GDHm1_NSRES
+  CHARACTER*2  GDHm1_NSDIR
+  CHARACTER*1 GDHm1_FORM
+  INTEGER  GDHm1_BYTE
+  REAL*8  GDHm1_MUL
+  REAL*8  GDHm1_ADD
+
+
+  CHARACTER*200 LND_HEAD
+  CHARACTER*5 LND_YEAR
+  CHARACTER*200 LND_FOOT
+  CHARACTER*200 LND_VNM
+  REAL*8  LND_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  LND_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  LND_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  LND_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  LND_WERES
+  REAL*8  LND_NSRES
+  CHARACTER*2  LND_NSDIR
+  CHARACTER*1 LND_FORM
+  INTEGER  LND_BYTE
+  REAL*8  LND_MUL
+  REAL*8  LND_ADD
+
+
+
+  CHARACTER*200 SOIL_HEAD
+  CHARACTER*5 SOIL_YEAR
+  CHARACTER*200 SOIL_FOOT
+  CHARACTER*200 SOIL_VNM
+  REAL*8  SOIL_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  SOIL_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  SOIL_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  SOIL_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  SOIL_WERES
+  REAL*8  SOIL_NSRES
+  CHARACTER*2  SOIL_NSDIR
+  CHARACTER*1 SOIL_FORM
+  INTEGER  SOIL_BYTE
+  REAL*8  SOIL_MUL
+  REAL*8  SOIL_ADD
+
+  CHARACTER*200 NFERT_HEAD
+  CHARACTER*5 NFERT_YEAR
+  CHARACTER*200 NFERT_FOOT
+  CHARACTER*200 NFERT_VNM
+  REAL*8  NFERT_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  NFERT_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  NFERT_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  NFERT_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  NFERT_WERES
+  REAL*8  NFERT_NSRES
+  CHARACTER*2  NFERT_NSDIR
+  CHARACTER*1 NFERT_FORM
+  INTEGER  NFERT_BYTE
+  REAL*8  NFERT_MUL
+  REAL*8  NFERT_ADD
+
+
+  CHARACTER*200 P1V_HEAD
+  CHARACTER*5 P1V_YEAR
+  CHARACTER*200 P1V_FOOT
+  CHARACTER*200 P1V_VNM
+  REAL*8  P1V_WEST      ! West edge  [degree; -180.0 - 180.0]
+  REAL*8  P1V_EAST      ! East edge  [degree; -180.0 - 180.0]
+  REAL*8  P1V_NORTH     ! North edge [degree; -90.0 - 90.0]
+  REAL*8  P1V_SOUTH     ! South edge [degree; -90.0 - 90.0]
+  REAL*8  P1V_WERES
+  REAL*8  P1V_NSRES
+  CHARACTER*2  P1V_NSDIR
+  CHARACTER*1 P1V_FORM
+  INTEGER  P1V_BYTE
+  REAL*8  P1V_MUL
+  REAL*8  P1V_ADD
+
+
+
+!!!  [VARIABLE]
+  INTEGER IER
+
+!!!  [BUFFER VARIABLE]
+  CHARACTER*15 BUF15
+  CHARACTER*200 BUF200
+
+
+  CHARACTER*200 SETFILE
+    
+  CALL GETARG(1,SETFILE)
+!  print *,SETFILE
+  OPEN(10,file=SETFILE,status='old',iostat=IER)
+!  print *,"koko"
+  IF(IER .NE. 0)THEN
+     WRITE(*,*),"SETTING.txt could not be opened"
+     STOP
+  ELSE
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,I)')BUF15,STYR
+     READ(10,'(A15,I)')BUF15,ENYR
+     READ(10,'(A15,I)')BUF15,STDOY
+     READ(10,'(A15,I)')BUF15,ENDOY
+     READ(10,'(A15,I)')BUF15,TRES
+     READ(10,'(A15,I)')BUF15,clmTRES
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,F)')BUF15,WEST
+     READ(10,'(A15,F)')BUF15,EAST
+     READ(10,'(A15,F)')BUF15,NORTH
+     READ(10,'(A15,F)')BUF15,SOUTH
+     READ(10,'(A15,F)')BUF15,WERES
+     READ(10,'(A15,F)')BUF15,NSRES
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,I)')BUF15,IRR
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,CRP_NAME
+     READ(10,'(A15,A200)')BUF15,CRP_FILE
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,CO2_HEAD
+     READ(10,'(A15,A5)')BUF15,CO2_YEAR
+     READ(10,'(A15,A200)')BUF15,CO2_FOOT
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,YLD_HEAD
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,LAI_HEAD
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,PLT1_HEAD
+     READ(10,'(A15,A5)')BUF15,PLT1_YEAR
+     READ(10,'(A15,A200)')BUF15,PLT1_FOOT
+     READ(10,'(A15,A200)')BUF15,PLT1_VNM
+     READ(10,'(A15,F)')BUF15,PLT1_WEST
+     READ(10,'(A15,F)')BUF15,PLT1_EAST
+     READ(10,'(A15,F)')BUF15,PLT1_NORTH
+     READ(10,'(A15,F)')BUF15,PLT1_SOUTH
+     READ(10,'(A15,F)')BUF15,PLT1_WERES
+     READ(10,'(A15,F)')BUF15,PLT1_NSRES
+     READ(10,'(A15,A2)')BUF15,PLT1_NSDIR
+     READ(10,'(A15,A1)')BUF15,PLT1_FORM
+     READ(10,'(A15,I)')BUF15,PLT1_BYTE
+     READ(10,'(A15,F)')BUF15,PLT1_MUL
+     READ(10,'(A15,F)')BUF15,PLT1_ADD
+
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,GDHm1_HEAD
+     READ(10,'(A15,A5)')BUF15,GDHm1_YEAR
+     READ(10,'(A15,A200)')BUF15,GDHm1_FOOT
+     READ(10,'(A15,A200)')BUF15,GDHm1_VNM
+     READ(10,'(A15,F)')BUF15,GDHm1_WEST
+     READ(10,'(A15,F)')BUF15,GDHm1_EAST
+     READ(10,'(A15,F)')BUF15,GDHm1_NORTH
+     READ(10,'(A15,F)')BUF15,GDHm1_SOUTH
+     READ(10,'(A15,F)')BUF15,GDHm1_WERES
+     READ(10,'(A15,F)')BUF15,GDHm1_NSRES
+     READ(10,'(A15,A2)')BUF15,GDHm1_NSDIR
+     READ(10,'(A15,A1)')BUF15,GDHm1_FORM
+     READ(10,'(A15,I)')BUF15,GDHm1_BYTE
+     READ(10,'(A15,F)')BUF15,GDHm1_MUL
+     READ(10,'(A15,F)')BUF15,GDHm1_ADD
+
+
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,LND_HEAD
+     READ(10,'(A15,A5)')BUF15,LND_YEAR
+     READ(10,'(A15,A200)')BUF15,LND_FOOT
+     READ(10,'(A15,A200)')BUF15,LND_VNM
+     READ(10,'(A15,F)')BUF15,LND_WEST
+     READ(10,'(A15,F)')BUF15,LND_EAST
+     READ(10,'(A15,F)')BUF15,LND_NORTH
+     READ(10,'(A15,F)')BUF15,LND_SOUTH
+     READ(10,'(A15,F)')BUF15,LND_WERES
+     READ(10,'(A15,F)')BUF15,LND_NSRES
+     READ(10,'(A15,A2)')BUF15,LND_NSDIR
+     READ(10,'(A15,A1)')BUF15,LND_FORM
+     READ(10,'(A15,I)')BUF15,LND_BYTE
+     READ(10,'(A15,F)')BUF15,LND_MUL
+     READ(10,'(A15,F)')BUF15,LND_ADD
+
+
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,TMP_HEAD
+     READ(10,'(A15,A5)')BUF15,TMP_YEAR
+     READ(10,'(A15,A200)')BUF15,TMP_FOOT
+     READ(10,'(A15,A200)')BUF15,TMP_VNM
+     READ(10,'(A15,F)')BUF15,TMP_WEST
+     READ(10,'(A15,F)')BUF15,TMP_EAST
+     READ(10,'(A15,F)')BUF15,TMP_NORTH
+     READ(10,'(A15,F)')BUF15,TMP_SOUTH
+     READ(10,'(A15,F)')BUF15,TMP_WERES
+     READ(10,'(A15,F)')BUF15,TMP_NSRES
+     READ(10,'(A15,A2)')BUF15,TMP_NSDIR
+     READ(10,'(A15,A1)')BUF15,TMP_FORM
+     READ(10,'(A15,I)')BUF15,TMP_BYTE
+     READ(10,'(A15,F)')BUF15,TMP_MUL
+     READ(10,'(A15,F)')BUF15,TMP_ADD
+
+
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,TMX_HEAD
+     READ(10,'(A15,A5)')BUF15,TMX_YEAR
+     READ(10,'(A15,A200)')BUF15,TMX_FOOT
+     READ(10,'(A15,A200)')BUF15,TMX_VNM
+     READ(10,'(A15,F)')BUF15,TMX_WEST
+     READ(10,'(A15,F)')BUF15,TMX_EAST
+     READ(10,'(A15,F)')BUF15,TMX_NORTH
+     READ(10,'(A15,F)')BUF15,TMX_SOUTH
+     READ(10,'(A15,F)')BUF15,TMX_WERES
+     READ(10,'(A15,F)')BUF15,TMX_NSRES
+     READ(10,'(A15,A2)')BUF15,TMX_NSDIR
+     READ(10,'(A15,A1)')BUF15,TMX_FORM
+     READ(10,'(A15,I)')BUF15,TMX_BYTE
+     READ(10,'(A15,F)')BUF15,TMX_MUL
+     READ(10,'(A15,F)')BUF15,TMX_ADD
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,TMN_HEAD
+     READ(10,'(A15,A5)')BUF15,TMN_YEAR
+     READ(10,'(A15,A200)')BUF15,TMN_FOOT
+     READ(10,'(A15,A200)')BUF15,TMN_VNM
+     READ(10,'(A15,F)')BUF15,TMN_WEST
+     READ(10,'(A15,F)')BUF15,TMN_EAST
+     READ(10,'(A15,F)')BUF15,TMN_NORTH
+     READ(10,'(A15,F)')BUF15,TMN_SOUTH
+     READ(10,'(A15,F)')BUF15,TMN_WERES
+     READ(10,'(A15,F)')BUF15,TMN_NSRES
+     READ(10,'(A15,A2)')BUF15,TMN_NSDIR
+     READ(10,'(A15,A1)')BUF15,TMN_FORM
+     READ(10,'(A15,I)')BUF15,TMN_BYTE
+     READ(10,'(A15,F)')BUF15,TMN_MUL
+     READ(10,'(A15,F)')BUF15,TMN_ADD
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,PRC_HEAD
+     READ(10,'(A15,A5)')BUF15,PRC_YEAR
+     READ(10,'(A15,A200)')BUF15,PRC_FOOT
+     READ(10,'(A15,A200)')BUF15,PRC_VNM
+     READ(10,'(A15,F)')BUF15,PRC_WEST
+     READ(10,'(A15,F)')BUF15,PRC_EAST
+     READ(10,'(A15,F)')BUF15,PRC_NORTH
+     READ(10,'(A15,F)')BUF15,PRC_SOUTH
+     READ(10,'(A15,F)')BUF15,PRC_WERES
+     READ(10,'(A15,F)')BUF15,PRC_NSRES
+     READ(10,'(A15,A2)')BUF15,PRC_NSDIR
+     READ(10,'(A15,A1)')BUF15,PRC_FORM
+     READ(10,'(A15,I)')BUF15,PRC_BYTE
+     READ(10,'(A15,F)')BUF15,PRC_MUL
+     READ(10,'(A15,F)')BUF15,PRC_ADD
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15A200)')BUF15,RSD_HEAD
+     READ(10,'(A15,A5)')BUF15,RSD_YEAR
+     READ(10,'(A15,A200)')BUF15,RSD_FOOT
+     READ(10,'(A15,A200)')BUF15,RSD_VNM
+     READ(10,'(A15,F)')BUF15,RSD_WEST
+     READ(10,'(A15,F)')BUF15,RSD_EAST
+     READ(10,'(A15,F)')BUF15,RSD_NORTH
+     READ(10,'(A15,F)')BUF15,RSD_SOUTH
+     READ(10,'(A15,F)')BUF15,RSD_WERES
+     READ(10,'(A15,F)')BUF15,RSD_NSRES
+     READ(10,'(A15,A2)')BUF15,RSD_NSDIR
+     READ(10,'(A15,A1)')BUF15,RSD_FORM
+     READ(10,'(A15,I)')BUF15,RSD_BYTE
+     READ(10,'(A15,F)')BUF15,RSD_MUL
+     READ(10,'(A15,F)')BUF15,RSD_ADD
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,SHM_HEAD
+     READ(10,'(A15,A5)')BUF15,SHM_YEAR
+     READ(10,'(A15,A200)')BUF15,SHM_FOOT
+     READ(10,'(A15,A200)')BUF15,SHM_VNM
+     READ(10,'(A15,F)')BUF15,SHM_WEST
+     READ(10,'(A15,F)')BUF15,SHM_EAST
+     READ(10,'(A15,F)')BUF15,SHM_NORTH
+     READ(10,'(A15,F)')BUF15,SHM_SOUTH
+     READ(10,'(A15,F)')BUF15,SHM_WERES
+     READ(10,'(A15,F)')BUF15,SHM_NSRES
+     READ(10,'(A15,A2)')BUF15,SHM_NSDIR
+     READ(10,'(A15,A1)')BUF15,SHM_FORM
+     READ(10,'(A15,I)')BUF15,SHM_BYTE
+     READ(10,'(A15,F)')BUF15,SHM_MUL
+     READ(10,'(A15,F)')BUF15,SHM_ADD
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,WND_HEAD
+     READ(10,'(A15,A5)')BUF15,WND_YEAR
+     READ(10,'(A15,A200)')BUF15,WND_FOOT
+     READ(10,'(A15,A200)')BUF15,WND_VNM
+     READ(10,'(A15,F)')BUF15,WND_WEST
+     READ(10,'(A15,F)')BUF15,WND_EAST
+     READ(10,'(A15,F)')BUF15,WND_NORTH
+     READ(10,'(A15,F)')BUF15,WND_SOUTH
+     READ(10,'(A15,F)')BUF15,WND_WERES
+     READ(10,'(A15,F)')BUF15,WND_NSRES
+     READ(10,'(A15,A2)')BUF15,WND_NSDIR
+     READ(10,'(A15,A1)')BUF15,WND_FORM
+     READ(10,'(A15,I)')BUF15,WND_BYTE
+     READ(10,'(A15,F)')BUF15,WND_MUL
+     READ(10,'(A15,F)')BUF15,WND_ADD
+     READ(10,'(A15,F)')BUF15,WND_HGT      
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,PRS_HEAD
+     READ(10,'(A15,A5)')BUF15,PRS_YEAR
+     READ(10,'(A15,A200)')BUF15,PRS_FOOT
+     READ(10,'(A15,A200)')BUF15,PRS_VNM
+     READ(10,'(A15,F)')BUF15,PRS_WEST
+     READ(10,'(A15,F)')BUF15,PRS_EAST
+     READ(10,'(A15,F)')BUF15,PRS_NORTH
+     READ(10,'(A15,F)')BUF15,PRS_SOUTH
+     READ(10,'(A15,F)')BUF15,PRS_WERES
+     READ(10,'(A15,F)')BUF15,PRS_NSRES
+     READ(10,'(A15,A2)')BUF15,PRS_NSDIR
+     READ(10,'(A15,A1)')BUF15,PRS_FORM
+     READ(10,'(A15,I)')BUF15,PRS_BYTE
+     READ(10,'(A15,F)')BUF15,PRS_MUL
+     READ(10,'(A15,F)')BUF15,PRS_ADD
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,OZN_HEAD
+     READ(10,'(A15,A5)')BUF15,OZN_YEAR
+     READ(10,'(A15,A200)')BUF15,OZN_FOOT
+     READ(10,'(A15,A200)')BUF15,OZN_VNM
+     READ(10,'(A15,F)')BUF15,OZN_WEST
+     READ(10,'(A15,F)')BUF15,OZN_EAST
+     READ(10,'(A15,F)')BUF15,OZN_NORTH
+     READ(10,'(A15,F)')BUF15,OZN_SOUTH
+     READ(10,'(A15,F)')BUF15,OZN_WERES
+     READ(10,'(A15,F)')BUF15,OZN_NSRES
+     READ(10,'(A15,A2)')BUF15,OZN_NSDIR
+     READ(10,'(A15,A1)')BUF15,OZN_FORM
+     READ(10,'(A15,I)')BUF15,OZN_BYTE
+     READ(10,'(A15,F)')BUF15,OZN_MUL
+     READ(10,'(A15,F)')BUF15,OZN_ADD
+
+
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,SOIL_HEAD
+     READ(10,'(A15,A5)')BUF15,SOIL_YEAR
+     READ(10,'(A15,A200)')BUF15,SOIL_FOOT
+     READ(10,'(A15,A200)')BUF15,SOIL_VNM
+     READ(10,'(A15,F)')BUF15,SOIL_WEST
+     READ(10,'(A15,F)')BUF15,SOIL_EAST
+     READ(10,'(A15,F)')BUF15,SOIL_NORTH
+     READ(10,'(A15,F)')BUF15,SOIL_SOUTH
+     READ(10,'(A15,F)')BUF15,SOIL_WERES
+     READ(10,'(A15,F)')BUF15,SOIL_NSRES
+     READ(10,'(A15,A2)')BUF15,SOIL_NSDIR
+     READ(10,'(A15,A1)')BUF15,SOIL_FORM
+     READ(10,'(A15,I)')BUF15,SOIL_BYTE
+     READ(10,'(A15,F)')BUF15,SOIL_MUL
+     READ(10,'(A15,F)')BUF15,SOIL_ADD
+     
+     
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,NFERT_HEAD
+     READ(10,'(A15,A5)')BUF15,NFERT_YEAR
+     READ(10,'(A15,A200)')BUF15,NFERT_FOOT
+     READ(10,'(A15,A200)')BUF15,NFERT_VNM
+     READ(10,'(A15,F)')BUF15,NFERT_WEST
+     READ(10,'(A15,F)')BUF15,NFERT_EAST
+     READ(10,'(A15,F)')BUF15,NFERT_NORTH
+     READ(10,'(A15,F)')BUF15,NFERT_SOUTH
+     READ(10,'(A15,F)')BUF15,NFERT_WERES
+     READ(10,'(A15,F)')BUF15,NFERT_NSRES
+     READ(10,'(A15,A2)')BUF15,NFERT_NSDIR
+     READ(10,'(A15,A1)')BUF15,NFERT_FORM
+     READ(10,'(A15,I)')BUF15,NFERT_BYTE
+     READ(10,'(A15,F)')BUF15,NFERT_MUL
+     READ(10,'(A15,F)')BUF15,NFERT_ADD
+
+     READ(10,'(A200)')BUF200
+     READ(10,'(A15,A200)')BUF15,P1V_HEAD
+     READ(10,'(A15,A5)')BUF15,P1V_YEAR
+     READ(10,'(A15,A200)')BUF15,P1V_FOOT
+     READ(10,'(A15,A200)')BUF15,P1V_VNM
+     READ(10,'(A15,F)')BUF15,P1V_WEST
+     READ(10,'(A15,F)')BUF15,P1V_EAST
+     READ(10,'(A15,F)')BUF15,P1V_NORTH
+     READ(10,'(A15,F)')BUF15,P1V_SOUTH
+     READ(10,'(A15,F)')BUF15,P1V_WERES
+     READ(10,'(A15,F)')BUF15,P1V_NSRES
+     READ(10,'(A15,A2)')BUF15,P1V_NSDIR
+     READ(10,'(A15,A1)')BUF15,P1V_FORM
+     READ(10,'(A15,I)')BUF15,P1V_BYTE
+     READ(10,'(A15,F)')BUF15,P1V_MUL
+     READ(10,'(A15,F)')BUF15,P1V_ADD
+     
+     
+     CLOSE(10)
+  END IF
+
+END SUBROUTINE RDSET
+
+
+
+  SUBROUTINE RDPRM(VEGFILE,RESPCP,EFFCON,ATHETA,BTHETA,MH2O,BH2O,KN,LTCH,ZKCA,ZKCB,ZKOA,ZKOB,GMMA,GMMB,RLFV,TLFV,RLFN,TLFN,hDVS,CFLF,CFST,CFRT,CFSO,VN,TB,TO,TH,LEFY0,LEFX1,LEFY1,LEFX2,LEFY2,LEFX3,LEFY3,PNCLX1,PNCLY1,PNCLX2,PNCLY2,PNCLX3,PNCLY3,DLFX1,DLFY1,DLFX2,DLFY2,DLFX3,DLFY3,LLFst,kLLF,RTX,RTY,RTX2,FSTR,SLWYA,SLWYB,SLWX,HGTAA,HGTAB,HGTBA,HGTBB,GZRT,MXRT,GMMSL,SLNX1,SLNX2,SLNX3,SLNYMX,SLNYMN,SLNK,TCmin,THcrit,HI,PLTDIF,HVT_TAVE)
+
+    IMPLICIT NONE
+
+!  [INPUT]
+    CHARACTER*200 VEGFILE
+
+!  [OUTPUT]
+    REAL*8 RESPCP
+    REAL*8 EFFCON    !
+    REAL*8 ATHETA
+    REAL*8 BTHETA
+    REAL*8 MH2O
+    REAL*8 BH2O
+    REAL*8 KN
+    REAL*8 LTCH
+    REAL*8 ZKCA     ! Kc at 298K [Pa]
+    REAL*8 ZKCB     ! Parameter for temperature dependence of Kc [-]
+    REAL*8 ZKOA     ! Ko at 298K [Pa]
+    REAL*8 ZKOB     ! Parameter for temperature dependence of Ko [-]
+    REAL*8 GMMA     ! Parameter for temperature dependence of Gamma* [-]
+    REAL*8 GMMB     ! Parameter for temperature dependence of Gamma* [-]
+
+    REAL*8 RLFV
+    REAL*8 TLFV
+    REAL*8 RLFN
+    REAL*8 TLFN
+    REAL*8 hDVS  ! heading DVS
+  REAL*8  CFLF         ! Fraction for leave
+  REAL*8  CFST         ! Fraction for stem
+  REAL*8  CFRT         ! Fraction for root
+  REAL*8  CFSO         ! Fraction for storage orga
+  REAL*8  RTX
+  REAL*8  RTY
+  REAL*8  RTX2
+  
+  INTEGER VN
+  REAL*8 TB
+  REAL*8 TO
+  REAL*8 TH
+
+
+  REAL*8  LEFY0
+  REAL*8  LEFX1
+  REAL*8  LEFY1
+  REAL*8  LEFX2
+  REAL*8  LEFY2
+  REAL*8  LEFX3
+  REAL*8  LEFY3
+  REAL*8  PNCLX1
+  REAL*8  PNCLY1
+  REAL*8  PNCLX2
+  REAL*8  PNCLY2
+  REAL*8  PNCLX3
+  REAL*8  PNCLY3
+  REAL*8  DLFX1
+  REAL*8  DLFY1
+  REAL*8  DLFX2
+  REAL*8  DLFY2
+  REAL*8  DLFX3
+  REAL*8  DLFY3
+  REAL*8  LLFst
+  REAL*8  kLLF
+  REAL*8  FSTR
+  REAL*8  SLWYA
+  REAL*8  SLWYB
+  REAL*8  SLWX
+  REAL*8  HGTAA
+  REAL*8  HGTAB
+  REAL*8  HGTBA
+  REAL*8  HGTBB
+  REAL*8 GZRT   !Growth rate of root  [m/day]
+  REAL*8 MXRT   !Maximum root length [m]
+  REAL*8 GMMSL  ! soil water stress factor
+  REAL*8 SLNX1
+  REAL*8 SLNX2
+  REAL*8 SLNX3
+  REAL*8 SLNYMX
+  REAL*8 SLNYMN
+  REAL*8 SLNK
+  REAL*8 TCmin
+  REAL*8 THcrit
+  REAL*8 HI
+  REAL*8 PLTDIF
+  REAL*8 HVT_TAVE
+
+!  [VARIABLE]
+    INTEGER IER
+
+!  [BUFFER VARIABLE]
+    CHARACTER*10 BUF10
+
+
+    OPEN(11,file=VEGFILE,status='old',iostat=IER)
+    IF(IER .NE. 0)THEN
+       WRITE(*,*)VEGFILE, "vege could not be opened"
+       STOP
+    ELSE
+       READ(11,'(A10,F)')BUF10,RESPCP
+       READ(11,'(A10,F)')BUF10,EFFCON
+       READ(11,'(A10,F)')BUF10,ATHETA
+       READ(11,'(A10,F)')BUF10,BTHETA
+       READ(11,'(A10,F)')BUF10,MH2O
+       READ(11,'(A10,F)')BUF10,BH2O
+       READ(11,'(A10,F)')BUF10,KN
+       READ(11,'(A10,F)')BUF10,LTCH
+       READ(11,'(A10,F)')BUF10,ZKCA
+       READ(11,'(A10,F)')BUF10,ZKCB
+       READ(11,'(A10,F)')BUF10,ZKOA
+       READ(11,'(A10,F)')BUF10,ZKOB
+       READ(11,'(A10,F)')BUF10,GMMA
+       READ(11,'(A10,F)')BUF10,GMMB
+       READ(11,'(A10,F)')BUF10,RLFV
+       READ(11,'(A10,F)')BUF10,TLFV
+       READ(11,'(A10,F)')BUF10,RLFN
+       READ(11,'(A10,F)')BUF10,TLFN
+       READ(11,'(A10,F)')BUF10,hDVS
+       READ(11,'(A10,F)')BUF10,CFLF
+       READ(11,'(A10,F)')BUF10,CFST
+       READ(11,'(A10,F)')BUF10,CFRT
+       READ(11,'(A10,F)')BUF10,CFSO
+       READ(11,'(A10,I)')BUF10,VN
+       READ(11,'(A10,F)')BUF10,TB
+       READ(11,'(A10,F)')BUF10,TO
+       READ(11,'(A10,F)')BUF10,TH
+       READ(11,'(A10,F)')BUF10,LEFY0
+       READ(11,'(A10,F)')BUF10,LEFX1
+       READ(11,'(A10,F)')BUF10,LEFY1
+       READ(11,'(A10,F)')BUF10,LEFX2
+       READ(11,'(A10,F)')BUF10,LEFY2
+       READ(11,'(A10,F)')BUF10,LEFX3
+       READ(11,'(A10,F)')BUF10,LEFY3
+       READ(11,'(A10,F)')BUF10,PNCLX1
+       READ(11,'(A10,F)')BUF10,PNCLY1
+       READ(11,'(A10,F)')BUF10,PNCLX2
+       READ(11,'(A10,F)')BUF10,PNCLY2
+       READ(11,'(A10,F)')BUF10,PNCLX3
+       READ(11,'(A10,F)')BUF10,PNCLY3
+       READ(11,'(A10,F)')BUF10,DLFX1
+       READ(11,'(A10,F)')BUF10,DLFY1
+       READ(11,'(A10,F)')BUF10,DLFX2
+       READ(11,'(A10,F)')BUF10,DLFY2
+       READ(11,'(A10,F)')BUF10,DLFX3
+       READ(11,'(A10,F)')BUF10,DLFY3
+       READ(11,'(A10,F)')BUF10,LLFst
+       READ(11,'(A10,F)')BUF10,kLLF
+       READ(11,'(A10,F)')BUF10,RTX
+       READ(11,'(A10,F)')BUF10,RTY
+       READ(11,'(A10,F)')BUF10,RTX2
+       READ(11,'(A10,F)')BUF10,FSTR
+       READ(11,'(A10,F)')BUF10,SLWYA
+       READ(11,'(A10,F)')BUF10,SLWYB
+       READ(11,'(A10,F)')BUF10,SLWX
+       READ(11,'(A10,F)')BUF10,HGTAA
+       READ(11,'(A10,F)')BUF10,HGTAB
+       READ(11,'(A10,F)')BUF10,HGTBA
+       READ(11,'(A10,F)')BUF10,HGTBB
+       READ(11,'(A10,F)')BUF10,GZRT
+       READ(11,'(A10,F)')BUF10,MXRT
+       READ(11,'(A10,F)')BUF10,GMMSL
+       READ(11,'(A10,F)')BUF10,SLNX1
+       READ(11,'(A10,F)')BUF10,SLNX2
+       READ(11,'(A10,F)')BUF10,SLNX3
+       READ(11,'(A10,F)')BUF10,SLNYMX
+       READ(11,'(A10,F)')BUF10,SLNYMN
+       READ(11,'(A10,F)')BUF10,SLNK
+       READ(11,'(A10,F)')BUF10,TCmin
+       READ(11,'(A10,F)')BUF10,THcrit
+       READ(11,'(A10,F)')BUF10,HI
+       READ(11,'(A10,F)')BUF10,PLTDIF
+       READ(11,'(A10,F)')BUF10,HVT_TAVE
+       
+       CLOSE(11)
+    END IF
+
+  END SUBROUTINE RDPRM
+
+
+SUBROUTINE RDNC(VAR,FILE_HEAD,FILE_fixNUM,FILE_NUM,FILE_FOOT,DAT_VNM,DAT_NLON,DAT_NLAT,DAT_NTIME,DAT_WEST,DAT_EAST,DAT_NORTH,DAT_SOUTH,DAT_WERES,DAT_NSRES,DAT_NSDIR,DAT_MUL,DAT_ADD,DAT_FORM,DAT_BYTE,NLON,NLAT,WEST,EAST,NORTH,SOUTH,WERES,NSRES)
+
+  USE netcdf
+  IMPLICIT NONE
+
+  !! [PARAM]
+  INTEGER DAT_NLON,DAT_NLAT,DAT_NTIME
+  INTEGER NLON,NLAT
+
+  !! [OUTPUT]
+  REAL*8 VAR(NLON,NLAT,DAT_NTIME)
+
+  !! [INPUT]
+  CHARACTER*200 FILE_HEAD
+  CHARACTER*5 FILE_fixNUM
+  INTEGER FILE_NUM
+  CHARACTER*200 FILE_FOOT
+  CHARACTER*200 DAT_VNM
+
+  REAL*8 DAT_WEST
+  REAL*8 DAT_EAST
+  REAL*8 DAT_NORTH
+  REAL*8 DAT_SOUTH
+  REAL*8 DAT_WERES
+  REAL*8 DAT_NSRES
+  CHARACTER*2 DAT_NSDIR
+  CHARACTER*1 DAT_FORM
+  INTEGER DAT_BYTE
+  REAL*8 DAT_MUL
+  REAL*8 DAT_ADD
+
+  REAL*8 WEST
+  REAL*8 EAST
+  REAL*8 NORTH
+  REAL*8 SOUTH
+  REAL*8 WERES
+  REAL*8 NSRES
+  
+
+! [Internal]
+  INTEGER I,J,II,JJ
+  INTEGER STATUS
+  INTEGER NCID
+  INTEGER VARID
+
+  INTEGER*4 VARIN_I4(DAT_NLON,DAT_NLAT,DAT_NTIME)
+  INTEGER*8 VARIN_I8(DAT_NLON,DAT_NLAT,DAT_NTIME)
+  REAL*4  VARIN_R4(DAT_NLON,DAT_NLAT,DAT_NTIME)
+  REAL*8  VARIN_R8(DAT_NLON,DAT_NLAT,DAT_NTIME)
+
+  REAL*8  VAR8(DAT_NLON,DAT_NLAT,DAT_NTIME)
+  REAL*8  VARTMP(DAT_NLON,DAT_NLAT,DAT_NTIME)
+  INTEGER TIME
+  INTEGER START(3),COUNT(3)
+  CHARACTER*200 FILE
+
+  CHARACTER*4 YYYY
+
+  CHARACTER*200 BUF200
+
+
+
+  IF(TRIM(ADJUSTL(FILE_fixNUM)) == "")THEN
+     IF(FILE_NUM > 0)THEN
+        WRITE(YYYY,'(I4)'),FILE_NUM
+        FILE=TRIM(FILE_HEAD)//TRIM(ADJUSTL(YYYY))//TRIM(FILE_FOOT)
+     ELSE
+        FILE=TRIM(FILE_HEAD)//TRIM(FILE_FOOT)
+     END IF
+  ELSE
+     FILE=TRIM(FILE_HEAD)//TRIM(ADJUSTL(FILE_fixNUM))//TRIM(FILE_FOOT)
+  END IF
+
+
+  STATUS=nf90_open(TRIM(ADJUSTL(FILE)),nf90_nowrite,NCID)
+  IF(STATUS /= nf90_noerr)THEN
+     print *,"file could not be opend",FILE
+     stop
+  END IF
+
+
+  STATUS=nf90_inq_varid(NCID,DAT_VNM,VARID)
+  IF(STATUS /= nf90_noerr)THEN
+     print *,DAT_VNM
+     print *,"could not get VARID",FILE
+     stop
+  END IF
+
+  
+  COUNT=(/DAT_NLON,DAT_NLAT,1/)
+  START=(/1,1,1/)
+
+  DO TIME=1,DAT_NTIME
+     start(3)=TIME
+     IF(DAT_FORM=="I" .AND. DAT_BYTE==4)THEN
+        STATUS=nf90_get_var(NCID,VARID,VARIN_I4(:,:,TIME),start=START,count=COUNT)
+        VAR8(:,:,TIME)=DBLE(VARIN_I4(:,:,TIME))
+     ELSE IF(DAT_FORM=="I" .AND. DAT_BYTE==8)THEN
+        STATUS=nf90_get_var(NCID,VARID,VARIN_I8(:,:,TIME),start=START,count=COUNT)
+        VAR8(:,:,TIME)=DBLE(VARIN_I8(:,:,TIME))
+     ELSE IF(DAT_FORM=="R" .AND. DAT_BYTE==4)THEN
+        STATUS=nf90_get_var(NCID,VARID,VARIN_R4(:,:,TIME),start=START,count=COUNT)
+        VAR8(:,:,TIME)=DBLE(VARIN_R4(:,:,TIME))
+     ELSE IF(DAT_FORM=="R" .AND. DAT_BYTE==8)THEN
+        STATUS=nf90_get_var(NCID,VARID,VARIN_R8(:,:,TIME),start=START,count=COUNT)
+        VAR8(:,:,TIME)=DBLE(VARIN_R8(:,:,TIME))
+     ELSE
+        print *,"Oh my god!"
+        stop
+     END IF
+
+     IF(STATUS /= nf90_noerr)THEN
+        print *,"could not get VALUE FRC"
+        print *,FILE
+        stop
+     END IF
+  END DO
+
+
+  IF(DAT_NSDIR=="NS")THEN
+     VARTMP(1:DAT_NLON,1:DAT_NLAT,:)=VAR8(1:DAT_NLON,DAT_NLAT:1:-1,:)
+  ELSE
+     VARTMP(:,:,:)=VAR8(:,:,:)
+  END IF
+
+
+  II=INT((WEST-DAT_WEST)/DAT_WERES)
+  IF(II<0)THEN
+     II=II+DAT_NLON
+  END IF
+  JJ=INT((SOUTH-DAT_SOUTH)/DAT_NSRES)
+
+  IF((II+NLON)>(DAT_NLON))THEN
+     VAR(1:(DAT_NLON-II),1:NLAT,:)=VARTMP((II+1):DAT_NLON, (JJ+1):(JJ+NLAT)  ,:)
+     VAR((DAT_NLON-II+1):NLON,1:NLAT,:)=VARTMP(1:(NLON-(DAT_NLON-II)), (JJ+1):(JJ+NLAT),:)
+  ELSE
+     VAR(1:NLON,1:NLAT,:)=VARTMP((II+1):(II+NLON),(JJ+1):(JJ+NLAT),:)
+  END IF
+
+  VAR(:,:,:)=VAR(:,:,:)*DAT_MUL+DAT_ADD
+
+
+  STATUS=nf90_close(NCID)
+  IF(STATUS /= nf90_noerr)THEN
+     print *,"could not close"
+     stop
+  END IF
+
+
+END SUBROUTINE RDNC
+
+
+SUBROUTINE RD_CO2(CO2PPM,HEAD,IYEAR,CO2_YEAR,FOOT)
+
+  IMPLICIT NONE
+
+  CHARACTER*200 HEAD
+  CHARACTER*200 FOOT
+  REAL*8 CO2PPM
+  INTEGER IYEAR
+  CHARACTER*5 CO2_YEAR
+  
+  CHARACTER*4 YYYY
+  INTEGER I,IER
+  CHARACTER*200 CO2FILE
+
+  IF(CO2_YEAR=="")THEN
+     WRITE(YYYY,'(I4)'),IYEAR
+     CO2FILE=TRIM(ADJUSTL(HEAD))//TRIM(ADJUSTL(YYYY))//TRIM(ADJUSTL(FOOT))
+  ELSE
+     CO2FILE=TRIM(ADJUSTL(HEAD))//TRIM(ADJUSTL(CO2_YEAR))//TRIM(ADJUSTL(FOOT))
+  END IF
+
+
+  
+  OPEN(12,file=trim(CO2FILE),status='old',iostat=IER)
+  IF(IER .NE. 0)THEN
+     WRITE(*,*),"CO2 file could not be opened"
+     STOP
+  ELSE
+     READ(12,*)CO2PPM
+  END IF
+  CLOSE(12)
+  
+
+
+  
+END SUBROUTINE RD_CO2
+
+
+
+
+
+SUBROUTINE WRTNC_YLD(HEAD,YLD,YEAR,NLON,NLAT)
+
+
+  use netcdf
+  IMPLICIT NONE
+
+  include "./param.inc"
+
+  INTEGER IRR
+  INTEGER GRW
+  INTEGER NLON,NLAT
+  INTEGER I,J,II,JJ,FILEERR
+  CHARACTER*200 HEAD
+!  INTEGER LAI(NLON,NLAT) !for producing DOYmx AY2024
+  REAL*8 YLD(NLON,NLAT)
+
+
+  CHARACTER*200 FILE
+
+  INTEGER YEAR
+  CHARACTER*4 YYYY
+
+  integer status
+  integer ncid,varid
+  integer lat_dimid,lon_dimid
+
+  integer ILON,ILAT
+  integer dimids(2)
+
+  REAL*8  LAT(NLAT)
+  REAL*8  LON(NLON)
+  integer lat_varid, lon_varid
+
+
+  WRITE(YYYY,'(I4)'),YEAR
+
+
+  FILE=TRIM(ADJUSTL(HEAD))//"_"//YYYY//".nc"
+
+
+        status=nf90_create(FILE,nf90_clobber,ncid)
+        if(status /= nf90_noerr)THEN
+           print *,"1"
+           stop
+        END IF
+
+        status=nf90_def_dim(ncid,"latitude",NLAT,lat_dimid)
+        if(status /= nf90_noerr)THEN
+           print *,"2"
+           stop
+        END IF
+
+        status=nf90_def_dim(ncid,"longitude",NLON,lon_dimid)
+        if(status /= nf90_noerr)THEN
+           print *,"3"
+           stop
+        END IF
+
+
+        dimids=(/lon_dimid,lat_dimid/)
+        status=nf90_def_var(ncid,"Crop_yield",NF90_DOUBLE,dimids,varid)
+        if(status /= nf90_noerr)THEN
+           print *,"8"
+           stop
+        END IF
+
+
+        status=nf90_put_att(ncid,varid,"units","kg/ha")
+        if(status /= nf90_noerr)THEN
+           print *,"9"
+           stop
+        END IF
+
+
+        status=nf90_enddef(ncid)
+        if(status /= nf90_noerr)THEN
+           print *,"def"
+           stop
+        END IF
+
+
+        status=nf90_put_var(ncid,varid,YLD(:,:))
+
+        if(status /= nf90_noerr)THEN
+           print *,"13"
+           stop
+        END IF
+
+        status=nf90_close(ncid)
+        if(status /= nf90_noerr)THEN
+           print *,"14"
+           stop
+        END IF
+
+
+
+      END SUBROUTINE WRTNC_YLD
+
+
+SUBROUTINE WRTNC_LAI(HEAD,LAI,YEAR,NLON,NLAT)
+
+
+  use netcdf
+  IMPLICIT NONE
+
+  include "./param.inc"
+
+  INTEGER IRR
+  INTEGER GRW
+  INTEGER NLON,NLAT
+  INTEGER I,J,II,JJ,FILEERR
+  CHARACTER*200 HEAD
+  INTEGER LAI(NLON,NLAT) !for producing DOYmx AY2024
+!  REAL*8 YLD(NLON,NLAT)
+
+
+  CHARACTER*200 FILE
+
+  INTEGER YEAR
+  CHARACTER*4 YYYY
+
+  integer status
+  integer ncid,varid
+  integer lat_dimid,lon_dimid
+
+  integer ILON,ILAT
+  integer dimids(2)
+
+  REAL*8  LAT(NLAT)
+  REAL*8  LON(NLON)
+  integer lat_varid, lon_varid
+
+
+  WRITE(YYYY,'(I4)'),YEAR
+
+
+  FILE=TRIM(ADJUSTL(HEAD))//"_"//YYYY//".nc"
+
+
+        status=nf90_create(FILE,nf90_clobber,ncid)
+        if(status /= nf90_noerr)THEN
+           print *,"1"
+           stop
+        END IF
+
+        status=nf90_def_dim(ncid,"latitude",NLAT,lat_dimid)
+        if(status /= nf90_noerr)THEN
+           print *,"2"
+           stop
+        END IF
+
+        status=nf90_def_dim(ncid,"longitude",NLON,lon_dimid)
+        if(status /= nf90_noerr)THEN
+           print *,"3"
+           stop
+        END IF
+
+
+        dimids=(/lon_dimid,lat_dimid/)
+        status=nf90_def_var(ncid,"var",NF90_DOUBLE,dimids,varid)
+        if(status /= nf90_noerr)THEN
+           print *,"8"
+           stop
+        END IF
+
+
+        status=nf90_put_att(ncid,varid,"units"," ")
+        if(status /= nf90_noerr)THEN
+           print *,"9"
+           stop
+        END IF
+
+
+        status=nf90_enddef(ncid)
+        if(status /= nf90_noerr)THEN
+           print *,"def"
+           stop
+        END IF
+
+
+        status=nf90_put_var(ncid,varid,LAI(:,:))
+
+        if(status /= nf90_noerr)THEN
+           print *,"13"
+           stop
+        END IF
+
+        status=nf90_close(ncid)
+        if(status /= nf90_noerr)THEN
+           print *,"14"
+           stop
+        END IF
+
+
+
+      END SUBROUTINE WRTNC_LAI
+
+
+SUBROUTINE WRTNC_DAY(HEAD,YLD,YEAR,NLON,NLAT)
+
+
+  use netcdf
+  IMPLICIT NONE
+
+  include "./param.inc"
+
+  INTEGER NN
+  INTEGER NLON,NLAT
+  INTEGER I,J,II,JJ,FILEERR
+  CHARACTER*200 HEAD
+  REAL*8 YLD(NLON,NLAT,365)
+
+
+  CHARACTER*200 FILE
+
+  INTEGER YEAR
+  CHARACTER*4 YYYY
+
+  integer status
+  integer ncid,varid
+  integer lat_dimid,lon_dimid,doy_dimid
+
+  integer ILON,ILAT
+  integer dimids(3)
+
+  REAL*8  LAT(NLAT)
+  REAL*8  LON(NLON)
+  integer lat_varid, lon_varid,doy_varid
+
+
+  WRITE(YYYY,'(I4)'),YEAR
+
+
+  FILE=TRIM(ADJUSTL(HEAD))//"_"//YYYY//".nc"
+
+
+        status=nf90_create(FILE,nf90_clobber,ncid)
+        if(status /= nf90_noerr)THEN
+           print *,"1"
+           stop
+        END IF
+
+        status=nf90_def_dim(ncid,"latitude",NLAT,lat_dimid)
+        if(status /= nf90_noerr)THEN
+           print *,"2"
+           stop
+        END IF
+
+        status=nf90_def_dim(ncid,"longitude",NLON,lon_dimid)
+        if(status /= nf90_noerr)THEN
+           print *,"3"
+           stop
+        END IF
+
+        status=nf90_def_dim(ncid,"doy",365,doy_dimid)
+        if(status /= nf90_noerr)THEN
+           print *,"3"
+           stop
+        END IF
+
+
+        dimids=(/lon_dimid,lat_dimid,doy_dimid/)
+        status=nf90_def_var(ncid,"var",NF90_DOUBLE,dimids,varid)
+        if(status /= nf90_noerr)THEN
+           print *,"8"
+           stop
+        END IF
+
+
+        status=nf90_put_att(ncid,varid,"units","-")
+        if(status /= nf90_noerr)THEN
+           print *,"9"
+           stop
+        END IF
+
+
+        status=nf90_enddef(ncid)
+        if(status /= nf90_noerr)THEN
+           print *,"def"
+           stop
+        END IF
+
+
+        status=nf90_put_var(ncid,varid,YLD(:,:,:))
+
+        if(status /= nf90_noerr)THEN
+           print *,"13"
+           stop
+        END IF
+
+        status=nf90_close(ncid)
+        if(status /= nf90_noerr)THEN
+           print *,"14"
+           stop
+        END IF
+
+
+
+      END SUBROUTINE WRTNC_DAY
